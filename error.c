@@ -16,11 +16,35 @@ void print_usage(void)
     my_printf(" remove on a line.\n");
 }
 
+int check_args(int ac, char **av)
+{
+    for (int i = 1; av[i] != NULL; i++) {
+        for (int x = 0; av[i][x] != '\0'; x++) {
+            if (av[i][x] < 48 || av[i][x] > 59) {
+                write(2, "Error: Invalid input (positive number expected)\n",
+                49);
+                return (84);
+            }
+        }
+    }
+    return (0);
+}
+
 int error_handling(int ac, char **av)
 {
-    if (ac != 3 && (ac == 2 && av[1][0] != '-' && av[1][1] != 'h')) {
+    if (ac == 2 && my_strcmp(av[1], "-h") == 0) {
+        print_usage();
+        return (1);
+    }
+    if (ac != 3) {
         write(2, "Error: Wrong numbers of arguments\n", 35);
         return (84);
+    }
+    if (ac == 3) {
+        if (check_args(ac, av) != 0)
+            return (84);
+        else
+            return (0);
     }
     return (0);
 }

@@ -13,20 +13,24 @@ void my_freeing(data_t *data)
     for (int i = 0; data->map[i]; i++)
         free(data->map[i]);
     free(data->map);
+    free(data->matches);
+    free(data->lines);
     free(data);
 }
 
 int bridge(int ac, char **av, data_t *data)
 {
-    if (error_handling(ac, av) == 84) {
+    int status = error_handling(ac, av);
+
+    if (status == 84) {
         free(data);
         return (84);
     }
-    if (av[1][0] == '-' && av[1][1] == 'h' && av[2] == NULL) {
-        print_usage();
-        return (0);
+    if (status == 1) {
+        free(data);
+        return (1);
     }
-    return (1);
+    return (0);
 }
 
 int main(int ac, char **av)
@@ -34,16 +38,19 @@ int main(int ac, char **av)
     data_t *data = malloc(sizeof(data_t));
     int status_bridge = bridge(ac, av, data);
 
-    if (status_bridge == 1) {
+    if (status_bridge == 0) {
         data->nb_lines = my_getnbr(av[1]);
         data->nb_matches = my_getnbr(av[2]);
         if (data->nb_lines == 0 || data->nb_matches == 0) {
+            write(2, "Error: Invalide input (positive number expected)\n", 50);
             free(data);
             return (84);
         }
         init_game_board(data);
-        //print_updated_board_game(3, 5,data);
+        game_loop(data);
         my_freeing(data);
+    } else if (status_bridge == 1) {
+        return (0);
     } else
         return (status_bridge);
     return (0);

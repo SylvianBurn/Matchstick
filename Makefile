@@ -9,6 +9,8 @@ SRC	=	main.c	\
 		error.c	\
 		print_game_board.c	\
 		print_updated_board_game.c	\
+		game.c	\
+		scanning.c
 
 OBJ	=	$(SRC:.c=.o)
 
@@ -18,7 +20,7 @@ all:	$(NAME)
 
 $(NAME):	$(OBJ)
 	make -C ./lib/my
-	gcc	$(OBJ)	-o	$(NAME) -g -L./lib/my -lmy
+	gcc	$(OBJ)	-o	$(NAME) -L./lib/my -lmy -g
 
 clean:
 	make clean -C ./lib/my
