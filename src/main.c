@@ -5,8 +5,8 @@
 ** main.c
 */
 
-#include "include/matchstick.h"
-#include "include/my.h"
+#include "../include/matchstick.h"
+#include "../include/my.h"
 
 void my_freeing(data_t *data)
 {
@@ -37,6 +37,7 @@ int main(int ac, char **av)
 {
     data_t *data = malloc(sizeof(data_t));
     int status_bridge = bridge(ac, av, data);
+    int game_status = 0;
 
     if (status_bridge == 0) {
         data->nb_lines = my_getnbr(av[1]);
@@ -47,8 +48,9 @@ int main(int ac, char **av)
             return (84);
         }
         init_game_board(data);
-        game_loop(data);
+        game_status = game_loop(data);
         my_freeing(data);
+        return (game_status);
     } else if (status_bridge == 1) {
         return (0);
     } else

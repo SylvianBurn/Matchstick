@@ -8,6 +8,7 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <unistd.h>
+#include <time.h>
 #include <stddef.h>
 #include <stdint.h>
 
@@ -32,5 +33,7 @@ int error_handling(int ac, char **av);
 int game_loop(data_t *);
 int check_nb_line(data_t *, char *);
 int check_nb_matches_on_line(data_t *, int);
+int check_if_one_shot(data_t *, int);
+int is_one_line(data_t *);
 
 #endif /* !MATCHSTICK_H_ */

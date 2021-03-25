@@ -5,11 +5,29 @@
 ** game.c
 */
 
-#include "include/my.h"
-#include "include/matchstick.h"
+#include "../include/my.h"
+#include "../include/matchstick.h"
+
+int get_random_shot(data_t *data)
+{
+    int random_line = random() % data->nb_lines;
+    int random_matches = 0;
+
+    random_matches = random() % data->nb_matches;
+    return (0);
+}
+
+
 
 int game_ia(data_t *data)
 {
+    int nb = is_one_line(data);
+
+    srandom(time);
+    if (check_if_one_shot(data, nb) == 0)
+        return (1);
+    else
+        get_random_shot(data);
     return (0);
 }
 

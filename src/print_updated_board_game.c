@@ -5,8 +5,8 @@
 ** print_updated_board_game.c
 */
 
-#include "include/my.h"
-#include "include/matchstick.h"
+#include "../include/my.h"
+#include "../include/matchstick.h"
 
 int print_updated_board_game(int line, int nb_matches, data_t *data)
 {

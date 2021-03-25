@@ -5,12 +5,12 @@
 ## Makefile
 ##
 
-SRC	=	main.c	\
-		error.c	\
-		print_game_board.c	\
-		print_updated_board_game.c	\
-		game.c	\
-		scanning.c
+SRC	=	src/main.c	\
+		src/error.c	\
+		src/print_game_board.c	\
+		src/print_updated_board_game.c	\
+		src/game.c	\
+		src/scanning.c
 
 OBJ	=	$(SRC:.c=.o)
 

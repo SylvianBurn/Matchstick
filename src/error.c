@@ -5,8 +5,8 @@
 ** error.c
 */
 
-#include "include/matchstick.h"
-#include "include/my.h"
+#include "../include/matchstick.h"
+#include "../include/my.h"
 
 void print_usage(void)
 {

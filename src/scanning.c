@@ -5,8 +5,8 @@
 ** scanning.c
 */
 
-#include "include/my.h"
-#include "include/matchstick.h"
+#include "../include/my.h"
+#include "../include/matchstick.h"
 
 int check_nb_line(data_t *data, char *buffer_line)
 {
@@ -63,4 +63,30 @@ int check_nb_matches_on_line(data_t *data, int line)
     }
     data->game_matches = matches;
     return (0);
+}
+
+int is_one_line(data_t *data)
+{
+    int lines_with_matches = 0;
+
+    for (int i = 1; i <= data->nb_lines; i++) {
+        for (int y = 0; data->map[i][y] != '|' && data->map[i][y]; y++) {
+            if (data->map[i][y] == '|')
+                lines_with_matches++;
+        }
+    }
+    if (lines_with_matches > 1)
+        return (2);
+    else if (lines_with_matches == 1)
+        return (1);
+    else
+        return (0);
+}
+
+int check_if_one_shot(data_t *data, int is_one_line)
+{
+    if (is_one_line == 1) {
+        
+    }
+
 }

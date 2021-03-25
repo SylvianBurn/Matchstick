@@ -5,8 +5,8 @@
 ** main.c
 */
 
-#include "include/my.h"
-#include "include/matchstick.h"
+#include "../include/my.h"
+#include "../include/matchstick.h"
 
 void fill_in_outlines(data_t *data)
 {
@@ -59,5 +59,5 @@ void init_game_board(data_t *data)
 void print_game_board(data_t *data)
 {
     for (int i = 0; data->map[i]; i++)
-        printf("%s\n", data->map[i]);
+        my_printf("%s\n", data->map[i]);
 }
