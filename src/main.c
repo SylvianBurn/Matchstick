@@ -50,7 +50,7 @@ int main(int ac, char **av)
         init_game_board(data);
         game_status = game_loop(data);
         my_freeing(data);
-        return (game_status);
+        return (-game_status);
     } else if (status_bridge == 1) {
         return (0);
     } else

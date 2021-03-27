@@ -14,6 +14,10 @@
 
 #ifndef MATCHSTICK_H_
 #define MATCHSTICK_H_
+typedef enum enumplayer {
+    player,
+    AI
+} playerenum;
 
 typedef struct s_data {
     int nb_lines;
@@ -23,6 +27,8 @@ typedef struct s_data {
     char **map;
     int game_matches;
     int game_line;
+    int game_status;
+    playerenum last_player;
 } data_t;
 
 void init_game_board(data_t *);
@@ -35,5 +41,8 @@ int check_nb_line(data_t *, char *);
 int check_nb_matches_on_line(data_t *, int);
 int check_if_one_shot(data_t *, int);
 int is_one_line(data_t *);
+int get_nb_matches_on_line(data_t *, int);
+int detect_end(data_t *);
+int check_if_line_contains_matches(data_t *, int);
 
 #endif /* !MATCHSTICK_H_ */

@@ -61,3 +61,17 @@ void print_game_board(data_t *data)
     for (int i = 0; data->map[i]; i++)
         my_printf("%s\n", data->map[i]);
 }
+
+int print_updated_board_game(int line, int nb_matches, data_t *data)
+{
+    int nb_matches_removed = 0;
+
+    for (int i = my_strlen(data->map[line]); i != 0; i--) {
+        if (data->map[line][i] == '|' && nb_matches_removed < nb_matches) {
+            data->map[line][i] = ' ';
+            nb_matches_removed++;
+        }
+    }
+    print_game_board(data);
+    return (0);
+}

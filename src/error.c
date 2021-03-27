@@ -48,3 +48,21 @@ int error_handling(int ac, char **av)
     }
     return (0);
 }
+
+int detect_end(data_t *data)
+{
+    for (int x = 0; data->map[x] != NULL; x++) {
+        for (int y = 0; data->map[x][y] != '\0'; y++) {
+            if (data->map[x][y] == '|')
+                return (0);
+        }
+    }
+    if (data->last_player == player) {
+        my_printf("You lost, too bad...\n");
+        return (2);
+    }
+    if (data->last_player == AI) {
+        my_printf("I lost... snif... but I'll get you next time!!\n");
+        return (1);
+    }
+}

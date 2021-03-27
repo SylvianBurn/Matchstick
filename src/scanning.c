@@ -8,29 +8,6 @@
 #include "../include/my.h"
 #include "../include/matchstick.h"
 
-int check_nb_line(data_t *data, char *buffer_line)
-{
-    int line = 0;
-
-    for (int i = 0; buffer_line[i] != '\n' && buffer_line[i] != '\0'; i++) {
-        if (buffer_line[i] < 48 || buffer_line[i] > '9') {
-            write(2, "Error: invalid input (positive number expected)\n", 49);
-            return (-1);
-        }
-    }
-    line = my_getnbr(buffer_line);
-    if (line == 0 || line > data->nb_lines) {
-        write(2, "Error: this line is out of range\n", 34);
-        return (-1);
-    }
-    if (line < 1) {
-        write(2, "Error: invalid input (positive number expected)\n", 49);
-        return (-1);
-    }
-    data->game_line = line;
-    return (0);
-}
-
 int get_nb_matches_on_line(data_t *data, int line)
 {
     int nb = 0;
@@ -42,26 +19,36 @@ int get_nb_matches_on_line(data_t *data, int line)
     return (nb);
 }
 
+int check_nb_matches_on_line_conditions(data_t *data, int line)
+{
+    if (data->game_matches == 0) {
+        write(2, "Error: you have to remove at least one match\n", 46);
+        return (-1);
+    }
+    if (data->game_matches > data->nb_matches) {
+        my_printf("Error: You can not remove more than %d matches per turn\n",
+            data->nb_matches);
+            return (-1);
+    }
+    if (data->game_matches > get_nb_matches_on_line(data, line)) {
+        write(2, "Error: not enough matches on this line\n", 40);
+        return (-1);
+    }
+    return (0);
+}
+
 int check_nb_matches_on_line(data_t *data, int line)
 {
-    int matches = 0;
-
     for (int i = 0; data->matches[i] != '\n'; i++) {
         if (data->matches[i] < '0' || data->matches[i] > '9') {
             write(2, "Error: invalid input (positive number expected)\n", 49);
             return (-1);
         }
     }
-    matches = my_getnbr(data->matches);
-    if (matches == 0) {
-        write(2, "Error: you have to remove at least one match\n", 46);
+    data->game_matches = my_getnbr(data->matches);
+    if (check_nb_matches_on_line_conditions(data, line) == -1)
         return (-1);
-    }
-    if (matches > get_nb_matches_on_line(data, line)) {
-        write(2, "Error: not enough matches on this line\n", 40);
-        return (-1);
-    }
-    data->game_matches = matches;
+    data->game_status = 2;
     return (0);
 }
 
@@ -69,14 +56,16 @@ int is_one_line(data_t *data)
 {
     int lines_with_matches = 0;
 
-    for (int i = 1; i <= data->nb_lines; i++) {
-        for (int y = 0; data->map[i][y] != '|' && data->map[i][y]; y++) {
-            if (data->map[i][y] == '|')
+    for (int i = 0; data->map[i] != NULL; i++) {
+        for (int y = 0;data->map[i][y] != '\0'; y++) {
+            if (data->map[i][y] == '|') {
                 lines_with_matches++;
+                i++;
+            }
         }
     }
     if (lines_with_matches > 1)
-        return (2);
+        return (lines_with_matches);
     else if (lines_with_matches == 1)
         return (1);
     else
@@ -85,8 +74,24 @@ int is_one_line(data_t *data)
 
 int check_if_one_shot(data_t *data, int is_one_line)
 {
-    if (is_one_line == 1) {
-        
-    }
+    int line_to_check = 0;
+    int matches = 0;
 
+    for (int i = 1; data->map[i]; i++) {
+        for (int y = 0; data->map[i][y]; y++) {
+            if (data->map[i][y] == '|')
+                line_to_check = i;
+        }
+    }
+    matches = get_nb_matches_on_line(data, line_to_check);
+    if (matches <= data->nb_matches) {
+        my_printf("AI's removed %d match(es) from line %d\n", (matches - 1),
+            line_to_check);
+        print_updated_board_game(line_to_check, (matches -  1), data);
+        return (1);
+    } else {
+        my_printf("AI's removed 1 match(es) from line %d\n", line_to_check);
+        print_updated_board_game(line_to_check, 1, data);
+    }
+    return (0);
 }

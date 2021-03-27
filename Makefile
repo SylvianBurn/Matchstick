@@ -8,9 +8,10 @@
 SRC	=	src/main.c	\
 		src/error.c	\
 		src/print_game_board.c	\
-		src/print_updated_board_game.c	\
 		src/game.c	\
-		src/scanning.c
+		src/scanning.c	\
+		src/scanning2.c	\
+		src/ai_scans.c
 
 OBJ	=	$(SRC:.c=.o)
 
@@ -20,7 +21,7 @@ all:	$(NAME)
 
 $(NAME):	$(OBJ)
 	make -C ./lib/my
-	gcc	$(OBJ)	-o	$(NAME) -L./lib/my -lmy -g
+	gcc -g	$(OBJ)	-o	$(NAME) -L./lib/my -lmy
 
 clean:
 	make clean -C ./lib/my
