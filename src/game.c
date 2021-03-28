@@ -55,7 +55,7 @@ int your_turn(data_t *data, size_t buffersize)
     }
     if (data->game_status == 2) {
         my_printf("Player removed %d match(es) from line %d\n",
-                data->game_matches, data->game_line);
+            data->game_matches, data->game_line);
         print_updated_board_game(data->game_line, data->game_matches, data);
         data->last_player = player;
     }
@@ -68,15 +68,20 @@ int game_loop(data_t *data)
     data->matches = malloc(sizeof(char) * buffersize);
 
     while (1) {
+        if (data->quit_status == 1) return (0);
         my_printf("\nYour turn:\n");
-        if (your_turn(data, buffersize) == -1)
-            return (-84);
+        if (your_turn(data, buffersize) == -1) {
+            data->quit_status = 1;
+            return (0);
+        }
         if (detect_end(data) == 2)
             return (-2);
-        my_printf("\nAI's turn..\n");
-        game_ia(data);
-        if (detect_end(data) == 1)
-            return (-1);
+        if (data->last_player == player) {
+            my_printf("\nAI's turn..\n");
+            game_ia(data);
+            if (detect_end(data) == 1)
+                return (-1);
+        }
     }
     return (0);
 }

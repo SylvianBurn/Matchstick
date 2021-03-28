@@ -28,6 +28,7 @@ typedef struct s_data {
     int game_matches;
     int game_line;
     int game_status;
+    int quit_status;
     playerenum last_player;
 } data_t;
 

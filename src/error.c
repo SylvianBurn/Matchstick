@@ -21,8 +21,6 @@ int check_args(int ac, char **av)
     for (int i = 1; av[i] != NULL; i++) {
         for (int x = 0; av[i][x] != '\0'; x++) {
             if (av[i][x] < 48 || av[i][x] > 59) {
-                write(2, "Error: Invalid input (positive number expected)\n",
-                49);
                 return (84);
             }
         }
@@ -37,7 +35,6 @@ int error_handling(int ac, char **av)
         return (1);
     }
     if (ac != 3) {
-        write(2, "Error: Wrong numbers of arguments\n", 35);
         return (84);
     }
     if (ac == 3) {

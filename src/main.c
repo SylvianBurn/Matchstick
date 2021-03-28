@@ -8,6 +8,17 @@
 #include "../include/matchstick.h"
 #include "../include/my.h"
 
+int check_inputs(data_t *data, char **av)
+{
+    data->nb_lines = my_getnbr(av[1]);
+    data->nb_matches = my_getnbr(av[2]);
+
+    if (data->nb_lines <= 1 || data->nb_lines > 99)
+        return (84);
+    if (data->nb_matches <= 0)
+        return (84);
+}
+
 void my_freeing(data_t *data)
 {
     for (int i = 0; data->map[i]; i++)
@@ -38,12 +49,10 @@ int main(int ac, char **av)
     data_t *data = malloc(sizeof(data_t));
     int status_bridge = bridge(ac, av, data);
     int game_status = 0;
+    data->quit_status = 0;
 
     if (status_bridge == 0) {
-        data->nb_lines = my_getnbr(av[1]);
-        data->nb_matches = my_getnbr(av[2]);
-        if (data->nb_lines == 0 || data->nb_matches == 0) {
-            write(2, "Error: Invalide input (positive number expected)\n", 50);
+        if (check_inputs(data, av) == 84) {
             free(data);
             return (84);
         }
