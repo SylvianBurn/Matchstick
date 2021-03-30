@@ -8,6 +8,14 @@
 #include "../include/matchstick.h"
 #include "../include/my.h"
 
+void init_gamedata(data_t *data)
+{
+    size_t buffersize = 4096;
+
+    data->lines = malloc(sizeof(char) * buffersize);
+    data->matches = malloc(sizeof(char) * buffersize);
+}
+
 int check_inputs(data_t *data, char **av)
 {
     data->nb_lines = my_getnbr(av[1]);

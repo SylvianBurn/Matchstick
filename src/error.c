@@ -63,3 +63,15 @@ int detect_end(data_t *data)
         return (1);
     }
 }
+
+char *rm_backline(char *str)
+{
+    char *new_str = malloc(sizeof(char) * my_strlen(str));
+    int i = 0;
+
+    for (; str[i] != '\n'; i++)
+        new_str[i] = str[i];
+    new_str[i] = '\0';
+    free(str);
+    return (new_str);
+}

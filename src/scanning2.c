@@ -12,22 +12,23 @@ int check_nb_line(data_t *data, char *buffer_line)
 {
     int line = 0;
 
-    for (int i = 0; buffer_line[i] != '\n' && buffer_line[i] != '\0'; i++) {
+    for (int i = 0; buffer_line[i] != '\0'; i++) {
         if (buffer_line[i] < 48 || buffer_line[i] > '9') {
-            write(2, "Error: invalid input (positive number expected)\n", 49);
+            write(1, "Error: invalid input (positive number expected)\n", 49);
             return (-1);
         }
     }
     line = my_getnbr(buffer_line);
     if (line == 0 || line > data->nb_lines) {
-        write(2, "Error: this line is out of range\n", 34);
+        write(1, "Error: this line is out of range\n", 34);
         return (-1);
     }
     if (line < 1) {
-        write(2, "Error: invalid input (positive number expected)\n", 49);
+        write(1, "Error: invalid input (positive number expected)\n", 49);
         return (-1);
     }
     data->game_line = line;
     data->game_status = 1;
+    data->error_status = 0;
     return (0);
 }

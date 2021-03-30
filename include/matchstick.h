@@ -29,6 +29,7 @@ typedef struct s_data {
     int game_line;
     int game_status;
     int quit_status;
+    int error_status;
     playerenum last_player;
 } data_t;
 
@@ -45,5 +46,8 @@ int is_one_line(data_t *);
 int get_nb_matches_on_line(data_t *, int);
 int detect_end(data_t *);
 int check_if_line_contains_matches(data_t *, int);
+int ask_line(data_t *, size_t);
+int ask_matches(data_t *, size_t);
+char *rm_backline(char *);
 
 #endif /* !MATCHSTICK_H_ */

@@ -22,7 +22,7 @@ int get_nb_matches_on_line(data_t *data, int line)
 int check_nb_matches_on_line_conditions(data_t *data, int line)
 {
     if (data->game_matches == 0) {
-        write(2, "Error: you have to remove at least one match\n", 46);
+        write(1, "Error: you have to remove at least one match\n", 46);
         return (-1);
     }
     if (data->game_matches > data->nb_matches) {
@@ -31,7 +31,7 @@ int check_nb_matches_on_line_conditions(data_t *data, int line)
             return (-1);
     }
     if (data->game_matches > get_nb_matches_on_line(data, line)) {
-        write(2, "Error: not enough matches on this line\n", 40);
+        write(1, "Error: not enough matches on this line\n", 40);
         return (-1);
     }
     return (0);
@@ -41,7 +41,7 @@ int check_nb_matches_on_line(data_t *data, int line)
 {
     for (int i = 0; data->matches[i] != '\n'; i++) {
         if (data->matches[i] < '0' || data->matches[i] > '9') {
-            write(2, "Error: invalid input (positive number expected)\n", 49);
+            write(1, "Error: invalid input (positive number expected)\n", 49);
             return (-1);
         }
     }
@@ -49,6 +49,7 @@ int check_nb_matches_on_line(data_t *data, int line)
     if (check_nb_matches_on_line_conditions(data, line) == -1)
         return (-1);
     data->game_status = 2;
+    data->error_status = 0;
     return (0);
 }
 
@@ -84,13 +85,13 @@ int check_if_one_shot(data_t *data, int is_one_line)
         }
     }
     matches = get_nb_matches_on_line(data, line_to_check);
-    if (matches <= data->nb_matches) {
-        my_printf("AI's removed %d match(es) from line %d\n", (matches - 1),
+    if (matches <= data->nb_matches && (matches - 1) > 0) {
+        my_printf("AI removed %d match(es) from line %d\n", (matches - 1),
             line_to_check);
         print_updated_board_game(line_to_check, (matches -  1), data);
         return (1);
     } else {
-        my_printf("AI's removed 1 match(es) from line %d\n", line_to_check);
+        my_printf("AI removed 1 match(es) from line %d\n", line_to_check);
         print_updated_board_game(line_to_check, 1, data);
     }
     return (0);

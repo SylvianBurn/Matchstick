@@ -48,6 +48,10 @@ void fill_in_map(data_t *data)
 
 void init_game_board(data_t *data)
 {
+    size_t buffersize = 4096;
+
+    data->lines = malloc(sizeof(char) * buffersize);
+    data->matches = malloc(sizeof(char) * buffersize);
     data->map = malloc(sizeof(char *) * (data->nb_lines + 3));
     for (int i = 0; i < (data->nb_lines + 3); i++)
         data->map[i] = malloc(sizeof(char) * (data->nb_lines * 2 + 2));

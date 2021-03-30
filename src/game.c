@@ -16,7 +16,7 @@ int get_random_shot(data_t *data)
     while (check_if_line_contains_matches(data, random_line) != 1)
         random_line = random() % data->nb_lines;
     random_matches = 1 + random() % get_nb_matches_on_line(data, random_line);
-    my_printf("AI's removed %d match(es) on line %d\n", random_matches,
+    my_printf("AI removed %d match(es) on line %d\n", random_matches,
         random_line);
     print_updated_board_game(random_line, random_matches, data);
     return (0);
@@ -39,33 +39,25 @@ int game_ia(data_t *data)
 int your_turn(data_t *data, size_t buffersize)
 {
     data->game_status = 0;
-    if (data->game_status == 0) {
-        my_printf("Line: ");
-        if (getline(&data->lines, &buffersize,stdin) == -1)
-            return (-1);
+    if (data->quit_status != 0 || data->game_status != 0) return (0);
+        if (ask_line(data, buffersize) == -1) return (-1);
         if (check_nb_line(data, data->lines) == -1)
             your_turn(data, buffersize);
-    }
-    if (data->game_status == 1) {
-        my_printf("Matches: ");
-        if (getline(&data->matches, &buffersize,stdin) == -1)
-            return (-1);
+    if (data->game_status != 1 || data->error_status != 0) return (0);
+        if (ask_matches(data, buffersize) == -1) return (-1);
         if (check_nb_matches_on_line(data, data->game_line) == -1)
             your_turn(data, buffersize);
-    }
-    if (data->game_status == 2) {
+    if (data->game_status != 2 || data->error_status != 0) return (0);
         my_printf("Player removed %d match(es) from line %d\n",
             data->game_matches, data->game_line);
         print_updated_board_game(data->game_line, data->game_matches, data);
         data->last_player = player;
-    }
+        data->error_status = 1;
 }
 
 int game_loop(data_t *data)
 {
     size_t buffersize = 4096;
-    data->lines = malloc(sizeof(char) * buffersize);
-    data->matches = malloc(sizeof(char) * buffersize);
 
     while (1) {
         if (data->quit_status == 1) return (0);
@@ -74,13 +66,12 @@ int game_loop(data_t *data)
             data->quit_status = 1;
             return (0);
         }
-        if (detect_end(data) == 2)
-            return (-2);
+        if (data->quit_status == 1) return (0);
+        if (detect_end(data) == 2) return (-2);
         if (data->last_player == player) {
             my_printf("\nAI's turn..\n");
             game_ia(data);
-            if (detect_end(data) == 1)
-                return (-1);
+            if (detect_end(data) == 1) return (-1);
         }
     }
     return (0);

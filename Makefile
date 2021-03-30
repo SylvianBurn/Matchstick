@@ -11,7 +11,8 @@ SRC	=	src/main.c	\
 		src/game.c	\
 		src/scanning.c	\
 		src/scanning2.c	\
-		src/ai_scans.c
+		src/ai_scans.c	\
+		src/asks.c
 
 OBJ	=	$(SRC:.c=.o)
 
