@@ -69,7 +69,7 @@ int game_loop(data_t *data)
         if (data->quit_status == 1) return (0);
         if (detect_end(data) == 2) return (-2);
         if (data->last_player == player) {
-            my_printf("\nAI's turn..\n");
+            my_printf("\nAI's turn...\n");
             game_ia(data);
             if (detect_end(data) == 1) return (-1);
         }
