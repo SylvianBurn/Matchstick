@@ -16,7 +16,7 @@ int get_random_shot(data_t *data)
     while (check_if_line_contains_matches(data, random_line) != 1)
         random_line = random() % data->nb_lines;
     random_matches = 1 + random() % get_nb_matches_on_line(data, random_line);
-    my_printf("AI removed %d match(es) on line %d\n", random_matches,
+    my_printf("AI removed %d match(es) from line %d\n", random_matches,
         random_line);
     print_updated_board_game(random_line, random_matches, data);
     return (0);
