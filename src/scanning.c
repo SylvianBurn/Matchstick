@@ -26,7 +26,7 @@ int check_nb_matches_on_line_conditions(data_t *data, int line)
         return (-1);
     }
     if (data->game_matches > data->nb_matches) {
-        my_printf("Error: You can not remove more than %d matches per turn\n",
+        my_printf("Error: you can not remove more than %d matches per turn\n",
             data->nb_matches);
             return (-1);
     }
