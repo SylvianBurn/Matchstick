@@ -43,7 +43,8 @@ int your_turn(data_t *data, size_t buffersize)
         if (ask_line(data, buffersize) == -1) return (-1);
         if (check_nb_line(data, data->lines) == -1)
             your_turn(data, buffersize);
-    if (data->game_status != 1 || data->error_status != 0) return (0);
+    if (data->quit_status != 0 || data->game_status != 1 ||
+    data->error_status != 0) return (0);
         if (ask_matches(data, buffersize) == -1) return (-1);
         if (check_nb_matches_on_line(data, data->game_line) == -1)
             your_turn(data, buffersize);
