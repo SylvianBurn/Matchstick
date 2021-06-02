@@ -8,12 +8,20 @@
 #include "../include/my.h"
 #include "../include/matchstick.h"
 
+void value_set(data_t *data, int line)
+{
+    data->game_line = line;
+    data->game_status = 1;
+    data->error_status = 0;
+}
+
 int check_nb_line(data_t *data, char *buffer_line)
 {
     int line = 0;
 
     for (int i = 0; buffer_line[i] != '\0'; i++) {
-        if (buffer_line[i] < 48 || buffer_line[i] > '9') {
+        if ((buffer_line[i] < 48 || buffer_line[i] > '9') &&
+        buffer_line[i] != '\n') {
             write(1, "Error: invalid input (positive number expected)\n", 49);
             return (-1);
         }
@@ -27,8 +35,6 @@ int check_nb_line(data_t *data, char *buffer_line)
         write(1, "Error: invalid input (positive number expected)\n", 49);
         return (-1);
     }
-    data->game_line = line;
-    data->game_status = 1;
-    data->error_status = 0;
+    value_set(data, line);
     return (0);
 }

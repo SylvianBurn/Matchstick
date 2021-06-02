@@ -27,8 +27,8 @@ int check_nb_matches_on_line_conditions(data_t *data, int line)
     }
     if (data->game_matches > data->nb_matches) {
         my_printf("Error: you can not remove more than %d matches per turn\n",
-            data->nb_matches);
-            return (-1);
+        data->nb_matches);
+        return (-1);
     }
     if (data->game_matches > get_nb_matches_on_line(data, line)) {
         write(1, "Error: not enough matches on this line\n", 40);
@@ -39,8 +39,9 @@ int check_nb_matches_on_line_conditions(data_t *data, int line)
 
 int check_nb_matches_on_line(data_t *data, int line)
 {
-    for (int i = 0; data->matches[i] != '\n'; i++) {
-        if (data->matches[i] < '0' || data->matches[i] > '9') {
+    for (int i = 0; data->matches[i] != '\0'; i++) {
+        if ((data->matches[i] < '0' || data->matches[i] > '9')
+        && data->matches[i] != '\n') {
             write(1, "Error: invalid input (positive number expected)\n", 49);
             return (-1);
         }

@@ -48,6 +48,5 @@ int detect_end(data_t *);
 int check_if_line_contains_matches(data_t *, int);
 int ask_line(data_t *, size_t);
 int ask_matches(data_t *, size_t);
-char *rm_backline(char *);
 
 #endif /* !MATCHSTICK_H_ */

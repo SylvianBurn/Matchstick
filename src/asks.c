@@ -15,7 +15,6 @@ int ask_line(data_t *data, size_t buffersize)
         data->quit_status = 1;
         return (-1);
     }
-    data->lines = rm_backline(data->lines);
     return (0);
 }
 
