@@ -22,7 +22,7 @@ int get_nb_matches_on_line(data_t *data, int line)
 int check_nb_matches_on_line_conditions(data_t *data, int line)
 {
     if (data->game_matches == 0) {
-        write(1, "Error: you have to remove at least one match\n", 46);
+        my_printf("Error: you have to remove at least one match\n");
         return (-1);
     }
     if (data->game_matches > data->nb_matches) {
@@ -31,7 +31,7 @@ int check_nb_matches_on_line_conditions(data_t *data, int line)
         return (-1);
     }
     if (data->game_matches > get_nb_matches_on_line(data, line)) {
-        write(1, "Error: not enough matches on this line\n", 40);
+        my_printf("Error: not enough matches on this line\n");
         return (-1);
     }
     return (0);
@@ -42,7 +42,7 @@ int check_nb_matches_on_line(data_t *data, int line)
     for (int i = 0; data->matches[i] != '\0'; i++) {
         if ((data->matches[i] < '0' || data->matches[i] > '9')
         && data->matches[i] != '\n') {
-            write(1, "Error: invalid input (positive number expected)\n", 49);
+            my_printf("Error: invalid input (positive number expected)\n");
             return (-1);
         }
     }

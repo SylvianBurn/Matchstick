@@ -22,17 +22,17 @@ int check_nb_line(data_t *data, char *buffer_line)
     for (int i = 0; buffer_line[i] != '\0'; i++) {
         if ((buffer_line[i] < 48 || buffer_line[i] > '9') &&
         buffer_line[i] != '\n') {
-            write(1, "Error: invalid input (positive number expected)\n", 49);
+            my_printf("Error: invalid input (positive number expected)\n");
             return (-1);
         }
     }
     line = my_getnbr(buffer_line);
     if (line == 0 || line > data->nb_lines) {
-        write(1, "Error: this line is out of range\n", 34);
+        my_printf("Error: this line is out of range\n");
         return (-1);
     }
     if (line < 1) {
-        write(1, "Error: invalid input (positive number expected)\n", 49);
+        my_printf("Error: invalid input (positive number expected)\n");
         return (-1);
     }
     value_set(data, line);

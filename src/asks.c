@@ -11,7 +11,7 @@
 int ask_line(data_t *data, size_t buffersize)
 {
     my_printf("Line: ");
-    if (getline(&data->lines, &buffersize,stdin) == -1) {
+    if (getline(&(data->lines), &buffersize,stdin) == -1) {
         data->quit_status = 1;
         return (-1);
     }
@@ -21,7 +21,7 @@ int ask_line(data_t *data, size_t buffersize)
 int ask_matches(data_t *data, size_t buffersize)
 {
     my_printf("Matches: ");
-    if (getline(&data->matches, &buffersize,stdin) == -1) {
+    if (getline(&(data->matches), &buffersize,stdin) == -1) {
         data->quit_status = 1;
         return (-1);
     }
